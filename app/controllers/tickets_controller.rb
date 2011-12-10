@@ -7,6 +7,7 @@ class TicketsController < ApplicationController
                                         :update,
                                         :destroy]
   before_filter :authorize_create!, :only => [:new, :create]
+  before_filter :authorize_update!, :only => [:edit, :update]
 
   def new
     @ticket = @project.tickets.build
@@ -64,4 +65,10 @@ private
     end
   end
 
+  def authorize_update!
+    if !current_user.admin? && cannot?("edit tickets".to_sym, @project)
+      flash[:alert] = "You cannot edit tickets on this project."
+      redirect_to @project
+    end
+  end
 end
