@@ -13,7 +13,7 @@
           <td><%= project.name %></td>
           <% permissions.each do |name, text| %>
             <td>
-              <%= check_box_tag "permissions[#{project.id}][#{name}]",
+              <%= check_box_tag "permissions[#{project.id}][#{name.gsub(" ", "_")}]",
                 @ability.can?(name.to_sym, project) %>
             </td>
           <% end %>

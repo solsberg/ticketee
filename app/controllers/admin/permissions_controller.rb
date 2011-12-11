@@ -14,7 +14,7 @@ class Admin::PermissionsController < Admin::BaseController
       permissions.each do |permission, checked|
         Permission.create!(:user => @user,
                            :thing => project,
-                           :action => permission)
+                           :action => permission.gsub("_", " "))
       end
     end
     flash[:notice] = "Permissions updated."
