@@ -11,4 +11,9 @@ module ApplicationHelper
     block.call if current_user.try(:admin?)
     nil
   end
+
+  def authorized?(action, thing, &block)
+    block.call if can?(action, thing) || current_user.try(:admin?)
+    nil
+  end
 end
