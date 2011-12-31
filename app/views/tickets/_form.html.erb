@@ -8,6 +8,10 @@
 		<%= f.label :description %>
 	 	<%= f.text_area :description %>
 	</p>
+  <p>
+    <%= label_tag :tags %>
+    <%= text_field_tag :tags, params[:tags] %>
+  </p>
   <div id="files">
   <%= render :partial => "files/form", :locals => { :number => 0 } %>
   </div>
