@@ -37,12 +37,6 @@ describe TicketsController do
         cannot_create_tickets!
       end
 
-      it "can begin to create a ticket" do
-        Permission.create!(:user => user, :thing => project, :action => "create tickets")
-        get :new, :project_id => project.id
-        response.should_not redirect_to(project)
-      end
-
       def cannot_update_tickets!
         response.should redirect_to(project)
         flash[:alert].should eql("You cannot edit tickets on this project.")
@@ -62,6 +56,25 @@ describe TicketsController do
         delete :destroy, { :project_id => project.id, :id => ticket.id }
         response.should redirect_to(project)
         flash[:alert].should eql("You cannot delete tickets from this project.")
+      end
+
+      context "with permission to create a ticket" do
+        before do
+          Permission.create!(:user => user, :thing => project, :action => "create tickets")
+        end
+
+        it "can begin to create a ticket" do
+          get :new, :project_id => project.id
+          response.should_not redirect_to(project)
+        end
+
+        it "cannot tag tickets without permission" do
+          post :create, :ticket => { :title => "New ticket",
+                                     :description => "description" },
+                        :project_id => project.id,
+                        :tags => "some tags"
+          Ticket.last.tags.should be_empty
+        end
       end
     end
   end

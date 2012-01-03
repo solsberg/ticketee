@@ -90,3 +90,18 @@ Feature: Assigning permissions
     And I press "Create Comment"
     Then I should see "Comment has been created."
     And I should see "Open" within "#ticket .state"
+
+  Scenario: Adding tags to a ticket
+    When I check "View" for "TextMate 2"
+    And I check "tag" for "TextMate 2"
+    And I press "Update"
+    And I follow "Sign Out"
+
+    Given I am signed in as "user@ticketee.com"
+    When I follow "TextMate 2"
+    And I follow "Shiny!"
+    And I fill in "Text" with "Opening this ticket."
+    And I fill in "Tags" with "new_tag"
+    And I press "Create Comment"
+    Then I should see "Comment has been created."
+    And I should see "new_tag" within "#ticket #tags"
