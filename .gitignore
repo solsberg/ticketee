@@ -7,4 +7,4 @@ tmp/
 *.swo
 *.*~
 public/system
-files
+/files
