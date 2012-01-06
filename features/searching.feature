@@ -31,3 +31,9 @@ Feature: Searching
     And I press "Search"
     Then I should see "Tagged!"
     And I should not see "A tag"
+
+  Scenario: Clicking a tag lists search results
+    When I follow "A tag"
+    And I follow "iteration_1"
+    Then I should see "A tag"
+    And I should not see "Tagged!"
