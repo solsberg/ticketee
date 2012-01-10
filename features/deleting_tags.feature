@@ -18,7 +18,6 @@ Feature: Deleting tags
     And I follow "Ticketee" within "#projects"
     And I follow "A tag"
 
-  @wip
   @javascript
   Scenario: Deleting a tag
     Then I should see "A tag"
